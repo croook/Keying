@@ -1,4 +1,4 @@
-// Keying.cpp : ¶¨Òå¿ØÖÆÌ¨Ó¦ÓÃ³ÌĞòµÄÈë¿Úµã¡£
+// Keying.cpp : å®šä¹‰æ§åˆ¶å°åº”ç”¨ç¨‹åºçš„å…¥å£ç‚¹ã€‚
 //
 
 #include "stdafx.h"
@@ -59,12 +59,12 @@ int main()
 	
 	for (j = 0; j < imgYlen2; j++) {
 		for (i = 0; i < imgXlen2; i++) {
-			if (buff[0][j*imgXlen2 + i] <= 10 || buff[0][j*imgXlen2 + i] >= 160 &&
-				buff[1][j*imgXlen2 + i] <= 100 || buff[1][j*imgXlen2 + i] >= 220 &&
-				buff[2][j*imgXlen2 + i] <= 10 || buff[2][j*imgXlen2 + i] >= 110) {
+			if ( (buff[0][j*imgXlen2 + i] > 10 && buff[0][j*imgXlen2 + i] < 160) &&
+				(buff[1][j*imgXlen2 + i] > 100 && buff[1][j*imgXlen2 + i] < 220) &&
+				(buff[2][j*imgXlen2 + i] > 10 && buff[2][j*imgXlen2 + i] < 110)) {
 
 				for(k = 0 ; k < 3 ; k++){
-					buffTmp[k][j*imgXlen2 + i] = buff[k][j*imgXlen2 + i];
+					buff[k][j*imgXlen2 + i] = buffTmp[k][j*imgXlen2 + i];
 				}
 			}
 		}
@@ -72,7 +72,7 @@ int main()
 	
 	for (i = 0; i < 3; i++) {
 		poDstDS->GetRasterBand(i+1)->RasterIO(
-			GF_Write, 0, 0, imgXlen1, imgYlen1, buffTmp[i], imgXlen1, imgYlen1, GDT_Byte, 0, 0
+			GF_Write, 0, 0, imgXlen1, imgYlen1, buff[i], imgXlen1, imgYlen1, GDT_Byte, 0, 0
 		);
 	}
 
